@@ -1,0 +1,141 @@
+{
+  "schema_version": "0.1",
+  "source_archive": {
+    "archive_id": "urn:owc:archive:fixture-001",
+    "payload_digest": "sha256:08e30e238d4530044e68a6d6ad88338c681d8d68bfe37f077227b22a7aa17de3",
+    "signer_key_id": "urn:owc:key:ed25519:eff4aaebfeb39519574246101932daf3751a90be679a4bd0caf07bbedf3c8b74"
+  },
+  "source_checkpoint": {
+    "checkpoint_id": "urn:owc:checkpoint:fixture-001",
+    "path": "checkpoints/checkpoint.json",
+    "digest": "sha256:8cd2c07347afc0f8d8229a3883904bf7ccd8f22be71b574530d2b54943b6d4c0"
+  },
+  "target": {
+    "provider": "claude",
+    "format": "json-and-markdown"
+  },
+  "objective": {
+    "statement": "Add an offline status command without changing network behavior.",
+    "source_paths": [
+      "checkpoints/checkpoint.json",
+      "events/session-started.json"
+    ]
+  },
+  "constraints": [
+    {
+      "statement": "Verification must not require network access.",
+      "source_paths": [
+        "checkpoints/checkpoint.json"
+      ]
+    }
+  ],
+  "git": {
+    "repository_id": "urn:owc:repository:fixture-open-work-commons",
+    "base_commit": "1111111111111111111111111111111111111111",
+    "head_commit": "2222222222222222222222222222222222222222",
+    "head_tree": "3333333333333333333333333333333333333333",
+    "clean": true,
+    "source_paths": [
+      "state/git-state.json"
+    ]
+  },
+  "decisions": [],
+  "evidence": [],
+  "evidence_gaps": [
+    {
+      "statement": "Checkpoint contains no evidence records.",
+      "source_paths": [
+        "checkpoints/checkpoint.json"
+      ]
+    }
+  ],
+  "open_questions": [
+    {
+      "statement": "Which command output should the first implementation expose?",
+      "source_paths": [
+        "checkpoints/checkpoint.json"
+      ]
+    }
+  ],
+  "next_action": {
+    "statement": "Inspect the current command surface and implement the smallest offline-only status response.",
+    "source_paths": [
+      "checkpoints/checkpoint.json",
+      "events/session-started.json",
+      "state/git-state.json"
+    ]
+  },
+  "sources": [
+    {
+      "path": "checkpoints/checkpoint.json",
+      "digest": "sha256:8cd2c07347afc0f8d8229a3883904bf7ccd8f22be71b574530d2b54943b6d4c0",
+      "label": "Root checkpoint"
+    },
+    {
+      "path": "events/session-started.json",
+      "digest": "sha256:4c8ee91e1ee1fb05806f4cf4c24f21058533dbcadc471f93c6bbad641db5d631",
+      "label": "Normalized session event"
+    },
+    {
+      "path": "state/git-state.json",
+      "digest": "sha256:70e56c5f7fca6f8b4b21342d6679e240669341645a71e2869af4392991eb86a8",
+      "label": "Exact Git state"
+    }
+  ],
+  "exclusions": [
+    {
+      "category": "raw-transcript",
+      "reason": "Raw provider transcripts are excluded by the v0 default policy."
+    }
+  ],
+  "budget": {
+    "max_items": 64,
+    "max_utf8_bytes": 32768,
+    "actual_items": 11,
+    "actual_utf8_bytes": 4158
+  },
+  "untrusted_content": {
+    "execution_allowed": false,
+    "delimiter": "OWC_UNTRUSTED_CONTENT"
+  },
+  "extensions": {
+    "openworkcommons.org/claims": [],
+    "openworkcommons.org/exact_git_state": {
+      "schema_version": "0.1",
+      "repository_id": "urn:owc:repository:fixture-open-work-commons",
+      "object_format": "sha1",
+      "captured_at": "2026-08-07T08:05:00Z",
+      "base_commit": "1111111111111111111111111111111111111111",
+      "head_commit": "2222222222222222222222222222222222222222",
+      "head_tree": "3333333333333333333333333333333333333333",
+      "head_ref": "refs/heads/fixture",
+      "worktree": {
+        "clean": true,
+        "untracked": []
+      },
+      "source_paths": [
+        "state/git-state.json"
+      ]
+    },
+    "openworkcommons.org/material_omissions": [
+      {
+        "category": "unparsed-content",
+        "count": 1,
+        "reason": "policy-boundary",
+        "details": {
+          "event_payloads_not_copied": 1
+        }
+      }
+    ],
+    "openworkcommons.org/exclusions": [
+      {
+        "category": "raw-transcript",
+        "reason": "Raw provider transcripts are excluded by the v0 default policy.",
+        "policy": "owc-v0-default-private",
+        "source_paths": [
+          "checkpoints/checkpoint.json"
+        ]
+      }
+    ]
+  }
+}

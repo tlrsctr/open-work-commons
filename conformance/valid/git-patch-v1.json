@@ -1,0 +1,18 @@
+{
+  "schema_version": 1,
+  "format": "application/vnd.openworkcommons.git-patch-v1",
+  "encoding": "base64url-unpadded",
+  "sections": [
+    {
+      "name": "index.diff",
+      "payload": "ZGlmZiAtLWdpdCBhL2EudHh0IGIvYS50eHQK"
+    },
+    {
+      "name": "worktree.diff",
+      "payload": ""
+    }
+  ],
+  "artifact": "T1dDLUdJVC1QQVRDSAABAgAKaW5kZXguZGlmZgAAAAAAAAAbZGlmZiAtLWdpdCBhL2EudHh0IGIvYS50eHQKAA13b3JrdHJlZS5kaWZmAAAAAAAAAAA",
+  "byte_length": 86,
+  "digest": "sha256:d8b76d48e5f8c5b5e926ad0b96c712980e760bcdcc96205891f9cfc15848bd47"
+}

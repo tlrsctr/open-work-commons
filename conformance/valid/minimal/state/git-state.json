@@ -1,0 +1,14 @@
+{
+  "schema_version": "0.1",
+  "repository_id": "urn:owc:repository:fixture-open-work-commons",
+  "object_format": "sha1",
+  "captured_at": "2026-08-07T08:05:00Z",
+  "base_commit": "1111111111111111111111111111111111111111",
+  "head_commit": "2222222222222222222222222222222222222222",
+  "head_tree": "3333333333333333333333333333333333333333",
+  "head_ref": "refs/heads/fixture",
+  "worktree": {
+    "clean": true,
+    "untracked": []
+  }
+}

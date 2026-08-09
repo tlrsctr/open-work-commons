@@ -1,0 +1,16 @@
+dist
+node_modules
+pnpm-lock.yaml
+# These exact signed bytes are normative fixture inputs. Reformatting them
+# invalidates their published digests and signature.
+conformance/valid/minimal/**/*.json
+
+# Frozen benchmark inputs and evaluator bytes are integrity-locked by
+# benchmarks/handoff-v0/benchmark.json.
+benchmarks/handoff-v0/ISSUE.md
+benchmarks/handoff-v0/source-session-interventions.md
+benchmarks/handoff-v0/interrupted/package.json
+benchmarks/handoff-v0/interrupted/src/promotion-gate.js
+benchmarks/handoff-v0/interrupted/test/public.test.js
+benchmarks/handoff-v0/evaluator/acceptance.test.mjs
+benchmarks/handoff-v0/reference/src/promotion-gate.js

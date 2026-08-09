@@ -1,0 +1,47 @@
+{
+  "checkpoint_id": "01KVBJCWYA4YW6J5M9GP655HZN",
+  "strategy": "manual-commit",
+  "branch": "feature/archive-boundary",
+  "checkpoints_count": 2,
+  "files_touched": ["src/archive.ts", "test/archive.test.ts"],
+  "session_count": 1,
+  "sessions": [
+    {
+      "index": 0,
+      "session_id": "session-alpha",
+      "agent": "Codex",
+      "model": "provider-model",
+      "kind": "coding",
+      "created_at": "2026-08-07T10:15:30Z",
+      "files_touched": ["src/archive.ts"],
+      "token_usage": {
+        "input_tokens": 120,
+        "output_tokens": 80,
+        "cache_read_tokens": 30,
+        "cache_creation_tokens": 10
+      },
+      "summary": {
+        "intent": "Define a portable checkpoint candidate.",
+        "outcome": "A metadata-only projection is ready for review.",
+        "friction": ["The provider has no offline-only export flag."],
+        "open_items": ["Authorize and bind the candidate to exact Git state."],
+        "learnings": {
+          "repo": ["Adapters do not assign normative OWC identities."],
+          "code": [
+            {
+              "path": "src/archive.ts",
+              "line": 12,
+              "end_line": 18,
+              "finding": "Keep provider assertions separate from evidence."
+            }
+          ],
+          "workflow": ["Redact before any durable write."]
+        }
+      },
+      "raw_transcript": "DETAIL_TRANSCRIPT_CANARY_MUST_BE_DROPPED",
+      "prompts": ["DETAIL_PROMPT_CANARY_MUST_BE_DROPPED"],
+      "responses": ["DETAIL_RESPONSE_CANARY_MUST_BE_DROPPED"]
+    }
+  ],
+  "unknown_private": "DETAIL_PRIVATE_CANARY_MUST_BE_DROPPED"
+}

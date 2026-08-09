@@ -1,0 +1,58 @@
+{
+  "format": "open-work-commons-portable-archive",
+  "schema_version": "0.1",
+  "archive_id": "urn:owc:archive:fixture-001",
+  "created_at": "2026-08-07T08:15:00Z",
+  "root_checkpoint": {
+    "checkpoint_id": "urn:owc:checkpoint:fixture-001",
+    "path": "checkpoints/checkpoint.json",
+    "digest": "sha256:8cd2c07347afc0f8d8229a3883904bf7ccd8f22be71b574530d2b54943b6d4c0"
+  },
+  "entries": [
+    {
+      "path": "checkpoints/checkpoint.json",
+      "media_type": "application/json",
+      "role": "checkpoint",
+      "byte_length": 1499,
+      "digest": "sha256:8cd2c07347afc0f8d8229a3883904bf7ccd8f22be71b574530d2b54943b6d4c0",
+      "required_for_verification": true
+    },
+    {
+      "path": "events/session-started.json",
+      "media_type": "application/json",
+      "role": "event",
+      "byte_length": 1044,
+      "digest": "sha256:4c8ee91e1ee1fb05806f4cf4c24f21058533dbcadc471f93c6bbad641db5d631",
+      "required_for_verification": true
+    },
+    {
+      "path": "state/git-state.json",
+      "media_type": "application/json",
+      "role": "git-state",
+      "byte_length": 442,
+      "digest": "sha256:70e56c5f7fca6f8b4b21342d6679e240669341645a71e2869af4392991eb86a8",
+      "required_for_verification": true
+    }
+  ],
+  "exclusions": [
+    {
+      "category": "raw-transcript",
+      "reason": "Raw provider transcripts are excluded by the v0 default policy.",
+      "policy": "owc-v0-default-private"
+    }
+  ],
+  "limits": {
+    "entry_count": 3,
+    "expanded_bytes": 2985,
+    "max_entry_bytes": 1499
+  },
+  "signature": {
+    "canonicalization": "RFC8785",
+    "digest_algorithm": "sha256",
+    "signature_algorithm": "ed25519",
+    "key_id": "urn:owc:key:ed25519:eff4aaebfeb39519574246101932daf3751a90be679a4bd0caf07bbedf3c8b74",
+    "public_key": "pz0lTIwHsq_vqmqFzCxT8Lj6he4QlsyNIPCtNhvBubU",
+    "payload_digest": "sha256:08e30e238d4530044e68a6d6ad88338c681d8d68bfe37f077227b22a7aa17de3",
+    "value": "KH2Nsf1MnoKkG9cpEBK47bHXDTUwaDkWvDcSdEXRtwU76XZVqfaZFMkvt_ybzVjjj7A4hkB2JQfAplvIzhxBBA"
+  }
+}

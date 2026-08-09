@@ -1,0 +1,207 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://openworkcommons.org/schemas/v0/resume-bundle.schema.json",
+  "title": "Open Work Commons v0 resume bundle",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "source_archive",
+    "source_checkpoint",
+    "target",
+    "objective",
+    "constraints",
+    "git",
+    "decisions",
+    "evidence",
+    "evidence_gaps",
+    "open_questions",
+    "next_action",
+    "sources",
+    "exclusions",
+    "budget",
+    "untrusted_content"
+  ],
+  "properties": {
+    "schema_version": { "const": "0.1" },
+    "source_archive": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["archive_id", "payload_digest", "signer_key_id"],
+      "properties": {
+        "archive_id": { "type": "string", "minLength": 1, "maxLength": 512 },
+        "payload_digest": { "$ref": "#/$defs/digest" },
+        "signer_key_id": { "type": "string", "minLength": 1, "maxLength": 512 }
+      }
+    },
+    "source_checkpoint": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["checkpoint_id", "path", "digest"],
+      "properties": {
+        "checkpoint_id": { "type": "string", "minLength": 1, "maxLength": 512 },
+        "path": { "$ref": "#/$defs/relativePath" },
+        "digest": { "$ref": "#/$defs/digest" }
+      }
+    },
+    "target": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["provider", "format"],
+      "properties": {
+        "provider": {
+          "type": "string",
+          "pattern": "^[a-z0-9][a-z0-9._-]{0,127}$"
+        },
+        "format": { "enum": ["json", "markdown", "json-and-markdown"] }
+      }
+    },
+    "objective": { "$ref": "#/$defs/sourcedStatement" },
+    "constraints": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/sourcedStatement" }
+    },
+    "git": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "repository_id",
+        "base_commit",
+        "head_commit",
+        "head_tree",
+        "clean",
+        "source_paths"
+      ],
+      "properties": {
+        "repository_id": { "type": "string", "minLength": 1, "maxLength": 512 },
+        "base_commit": { "$ref": "#/$defs/gitOid" },
+        "head_commit": { "$ref": "#/$defs/gitOid" },
+        "head_tree": { "$ref": "#/$defs/gitOid" },
+        "clean": { "type": "boolean" },
+        "source_paths": { "$ref": "#/$defs/sourcePaths" }
+      }
+    },
+    "decisions": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/sourcedStatement" }
+    },
+    "evidence": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["statement", "result", "subject_digest", "source_paths"],
+        "properties": {
+          "statement": { "type": "string", "minLength": 1, "maxLength": 8192 },
+          "result": { "enum": ["passed", "failed", "unknown"] },
+          "subject_digest": { "$ref": "#/$defs/digest" },
+          "source_paths": { "$ref": "#/$defs/sourcePaths" }
+        }
+      }
+    },
+    "evidence_gaps": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/sourcedStatement" }
+    },
+    "open_questions": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/sourcedStatement" }
+    },
+    "next_action": { "$ref": "#/$defs/sourcedStatement" },
+    "sources": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["path", "digest", "label"],
+        "properties": {
+          "path": { "$ref": "#/$defs/relativePath" },
+          "digest": { "$ref": "#/$defs/digest" },
+          "label": { "type": "string", "minLength": 1, "maxLength": 256 }
+        }
+      }
+    },
+    "exclusions": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["category", "reason"],
+        "properties": {
+          "category": { "type": "string", "minLength": 1, "maxLength": 128 },
+          "reason": { "type": "string", "minLength": 1, "maxLength": 2048 }
+        }
+      }
+    },
+    "budget": {
+      "type": "object",
+      "description": "Complete-output limits and measurements. For target format json-and-markdown, the same byte cap applies independently to the complete stable JSON and complete Markdown serializations, including metadata, citations, source and omission reporting.",
+      "additionalProperties": false,
+      "required": [
+        "max_items",
+        "max_utf8_bytes",
+        "actual_items",
+        "actual_utf8_bytes"
+      ],
+      "properties": {
+        "max_items": { "type": "integer", "minimum": 1 },
+        "max_utf8_bytes": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Shared upper bound for each complete emitted UTF-8 serialization."
+        },
+        "actual_items": { "type": "integer", "minimum": 0 },
+        "actual_utf8_bytes": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Maximum exact UTF-8 byte length across the complete emitted serializations; for json-and-markdown this is max(JSON bytes, Markdown bytes), including this field's stabilized decimal representation."
+        }
+      }
+    },
+    "untrusted_content": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["execution_allowed", "delimiter"],
+      "properties": {
+        "execution_allowed": { "const": false },
+        "delimiter": { "type": "string", "minLength": 1, "maxLength": 128 }
+      }
+    },
+    "extensions": { "$ref": "#/$defs/extensions" }
+  },
+  "$defs": {
+    "digest": { "type": "string", "pattern": "^sha256:[a-f0-9]{64}$" },
+    "gitOid": {
+      "type": "string",
+      "pattern": "^(?:[a-f0-9]{40}|[a-f0-9]{64})$"
+    },
+    "relativePath": {
+      "type": "string",
+      "pattern": "^(?!/)(?!.*\\\\)(?!.*(?:^|/)(?:\\.|\\.\\.)(?:/|$))(?!.*//)[A-Za-z0-9._-]+(?:/[A-Za-z0-9._-]+)*$",
+      "maxLength": 1024
+    },
+    "sourcePaths": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": { "$ref": "#/$defs/relativePath" }
+    },
+    "sourcedStatement": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["statement", "source_paths"],
+      "properties": {
+        "statement": { "type": "string", "minLength": 1, "maxLength": 8192 },
+        "source_paths": { "$ref": "#/$defs/sourcePaths" }
+      }
+    },
+    "extensions": {
+      "type": "object",
+      "propertyNames": { "pattern": "^[a-z0-9][a-z0-9.-]*/[A-Za-z0-9._-]+$" },
+      "additionalProperties": true
+    }
+  }
+}

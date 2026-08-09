@@ -1,0 +1,151 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://openworkcommons.org/schemas/v0/event.schema.json",
+  "title": "Open Work Commons v0 normalized event",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "event_id",
+    "event_type",
+    "recorded_at",
+    "actor",
+    "space_id",
+    "session_id",
+    "sequence",
+    "previous_event_id",
+    "provider",
+    "subject",
+    "payload",
+    "sensitivity",
+    "retention"
+  ],
+  "properties": {
+    "schema_version": { "const": "0.1" },
+    "event_id": { "$ref": "#/$defs/eventId" },
+    "event_type": {
+      "oneOf": [
+        { "$ref": "#/$defs/coreEventType" },
+        { "$ref": "#/$defs/extensionEventType" }
+      ]
+    },
+    "recorded_at": { "type": "string", "format": "date-time" },
+    "effective_at": { "type": ["string", "null"], "format": "date-time" },
+    "actor": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "kind"],
+      "properties": {
+        "id": { "type": "string", "minLength": 1, "maxLength": 512 },
+        "kind": { "enum": ["human", "agent", "service", "device"] },
+        "display_name": { "type": "string", "minLength": 1, "maxLength": 256 }
+      }
+    },
+    "space_id": { "type": "string", "minLength": 1, "maxLength": 512 },
+    "session_id": { "type": "string", "minLength": 1, "maxLength": 512 },
+    "sequence": { "type": "integer", "minimum": 0 },
+    "previous_event_id": {
+      "oneOf": [{ "$ref": "#/$defs/eventId" }, { "type": "null" }]
+    },
+    "provider": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name"],
+      "properties": {
+        "name": { "type": "string", "pattern": "^[a-z0-9][a-z0-9._-]{0,127}$" },
+        "adapter_version": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "provider_version": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "external_session_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 512
+        },
+        "external_event_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 512
+        }
+      }
+    },
+    "subject": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "id"],
+      "properties": {
+        "kind": { "type": "string", "pattern": "^[a-z][a-z0-9._-]{0,127}$" },
+        "id": { "type": "string", "minLength": 1, "maxLength": 512 }
+      }
+    },
+    "payload": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["media_type", "digest"],
+      "properties": {
+        "media_type": { "type": "string", "minLength": 1, "maxLength": 256 },
+        "digest": { "$ref": "#/$defs/digest" },
+        "inline": true,
+        "path": { "$ref": "#/$defs/relativePath" }
+      },
+      "oneOf": [
+        { "required": ["inline"], "not": { "required": ["path"] } },
+        { "required": ["path"], "not": { "required": ["inline"] } }
+      ]
+    },
+    "sensitivity": { "enum": ["public", "internal", "private", "restricted"] },
+    "retention": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["class", "expires_at"],
+      "properties": {
+        "class": {
+          "enum": ["ephemeral", "checkpoint", "archive", "legal-hold"]
+        },
+        "expires_at": { "type": ["string", "null"], "format": "date-time" }
+      }
+    },
+    "extensions": { "$ref": "#/$defs/extensions" }
+  },
+  "$defs": {
+    "digest": { "type": "string", "pattern": "^sha256:[a-f0-9]{64}$" },
+    "eventId": {
+      "type": "string",
+      "pattern": "^urn:owc:event:[A-Za-z0-9._:-]+$",
+      "maxLength": 512
+    },
+    "coreEventType": {
+      "enum": [
+        "session.started",
+        "context.declared",
+        "tool.observed",
+        "artifact.changed",
+        "evidence.observed",
+        "human.intervened",
+        "checkpoint.requested",
+        "session.ended"
+      ]
+    },
+    "extensionEventType": {
+      "type": "string",
+      "pattern": "^(?:[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?/[a-z][a-z0-9-]*(?:\\.[a-z][a-z0-9-]*)+$",
+      "maxLength": 256
+    },
+    "relativePath": {
+      "type": "string",
+      "pattern": "^(?!/)(?!.*\\\\)(?!.*(?:^|/)(?:\\.|\\.\\.)(?:/|$))(?!.*//)[A-Za-z0-9._-]+(?:/[A-Za-z0-9._-]+)*$",
+      "maxLength": 1024
+    },
+    "extensions": {
+      "type": "object",
+      "propertyNames": { "pattern": "^[a-z0-9][a-z0-9.-]*/[A-Za-z0-9._-]+$" },
+      "additionalProperties": true
+    }
+  }
+}

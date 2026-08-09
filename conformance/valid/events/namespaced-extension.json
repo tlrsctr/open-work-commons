@@ -1,0 +1,33 @@
+{
+  "schema_version": "0.1",
+  "event_id": "urn:owc:event:fixture-extension-001",
+  "event_type": "org.openworkcommons.fixture/session.annotated",
+  "recorded_at": "2026-08-07T08:00:00Z",
+  "actor": {
+    "id": "urn:owc:actor:fixture-operator",
+    "kind": "human"
+  },
+  "space_id": "urn:owc:space:fixture-local",
+  "session_id": "urn:owc:session:fixture-extension-001",
+  "sequence": 0,
+  "previous_event_id": null,
+  "provider": {
+    "name": "native"
+  },
+  "subject": {
+    "kind": "session",
+    "id": "urn:owc:session:fixture-extension-001"
+  },
+  "payload": {
+    "media_type": "application/json",
+    "digest": "sha256:2fec874ba561b245ebdde94a7c83705585af5ca76cf6599c07e9ba98f4f0a1da",
+    "inline": {
+      "objective": "Add an offline status command without changing network behavior."
+    }
+  },
+  "sensitivity": "private",
+  "retention": {
+    "class": "checkpoint",
+    "expires_at": null
+  }
+}

@@ -1,0 +1,20 @@
+[
+  {
+    "checkpoint_id": "01KVBJCWYA4YW6J5M9GP655HZN",
+    "session_id": "session-alpha",
+    "agent": "Codex",
+    "date": "2026-08-07T10:15:30Z",
+    "message": "Add a provider-neutral archive boundary",
+    "session_count": 1,
+    "session_ids": ["session-alpha"],
+    "raw_transcript": "RAW_TRANSCRIPT_CANARY_MUST_BE_DROPPED",
+    "unknown_private": {
+      "token": "UNKNOWN_PRIVATE_CANARY_MUST_BE_DROPPED"
+    }
+  },
+  {
+    "checkpoint_id": "01KVBJCWYA4YW6J5M9GP655HZP",
+    "date": "2026-08-07T11:00:00+00:00",
+    "message": "Record an explicit capability gap"
+  }
+]

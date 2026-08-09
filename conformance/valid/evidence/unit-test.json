@@ -1,0 +1,9 @@
+{
+  "schema_version": "0.1",
+  "evidence_id": "urn:owc:evidence:fixture-unit-test-001",
+  "kind": "unit-test",
+  "issuer": "urn:owc:verifier:node-test-runner",
+  "subject_digest": "sha256:70e56c5f7fca6f8b4b21342d6679e240669341645a71e2869af4392991eb86a8",
+  "result": "passed",
+  "observed_at": "2026-08-07T08:09:00Z"
+}

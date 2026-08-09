@@ -1,0 +1,138 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://openworkcommons.org/schemas/v0/archive-manifest.schema.json",
+  "title": "Open Work Commons v0 portable archive manifest",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "format",
+    "schema_version",
+    "archive_id",
+    "created_at",
+    "root_checkpoint",
+    "entries",
+    "exclusions",
+    "limits",
+    "signature"
+  ],
+  "properties": {
+    "format": { "const": "open-work-commons-portable-archive" },
+    "schema_version": { "const": "0.1" },
+    "archive_id": { "type": "string", "minLength": 1, "maxLength": 512 },
+    "created_at": { "type": "string", "format": "date-time" },
+    "root_checkpoint": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["checkpoint_id", "path", "digest"],
+      "properties": {
+        "checkpoint_id": { "type": "string", "minLength": 1, "maxLength": 512 },
+        "path": { "$ref": "#/$defs/relativePath" },
+        "digest": { "$ref": "#/$defs/digest" }
+      }
+    },
+    "entries": {
+      "type": "array",
+      "minItems": 3,
+      "uniqueItems": true,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["path", "media_type", "role", "byte_length", "digest"],
+        "properties": {
+          "path": { "$ref": "#/$defs/relativePath" },
+          "media_type": { "type": "string", "minLength": 1, "maxLength": 256 },
+          "role": {
+            "enum": [
+              "event",
+              "git-state",
+              "checkpoint",
+              "artifact",
+              "evidence",
+              "extension"
+            ]
+          },
+          "byte_length": { "type": "integer", "minimum": 0 },
+          "digest": { "$ref": "#/$defs/digest" },
+          "required_for_verification": { "type": "boolean", "default": true }
+        }
+      }
+    },
+    "exclusions": {
+      "type": "array",
+      "minItems": 1,
+      "contains": { "$ref": "#/$defs/rawTranscriptExclusion" },
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["category", "reason", "policy"],
+        "properties": {
+          "category": { "type": "string", "minLength": 1, "maxLength": 128 },
+          "reason": { "type": "string", "minLength": 1, "maxLength": 2048 },
+          "policy": { "type": "string", "minLength": 1, "maxLength": 256 }
+        }
+      }
+    },
+    "limits": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["entry_count", "expanded_bytes", "max_entry_bytes"],
+      "properties": {
+        "entry_count": { "type": "integer", "minimum": 1 },
+        "expanded_bytes": { "type": "integer", "minimum": 0 },
+        "max_entry_bytes": { "type": "integer", "minimum": 0 }
+      }
+    },
+    "signature": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "canonicalization",
+        "digest_algorithm",
+        "signature_algorithm",
+        "key_id",
+        "public_key",
+        "payload_digest",
+        "value"
+      ],
+      "properties": {
+        "canonicalization": { "const": "RFC8785" },
+        "digest_algorithm": { "const": "sha256" },
+        "signature_algorithm": { "const": "ed25519" },
+        "key_id": { "type": "string", "minLength": 1, "maxLength": 512 },
+        "public_key": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_-]{43}$"
+        },
+        "payload_digest": { "$ref": "#/$defs/digest" },
+        "value": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_-]{86}$"
+        }
+      }
+    },
+    "extensions": { "$ref": "#/$defs/extensions" }
+  },
+  "$defs": {
+    "digest": { "type": "string", "pattern": "^sha256:[a-f0-9]{64}$" },
+    "relativePath": {
+      "type": "string",
+      "pattern": "^(?!/)(?!.*\\\\)(?!.*(?:^|/)(?:\\.|\\.\\.)(?:/|$))(?!.*//)[A-Za-z0-9._-]+(?:/[A-Za-z0-9._-]+)*$",
+      "maxLength": 1024
+    },
+    "rawTranscriptExclusion": {
+      "type": "object",
+      "required": ["category"],
+      "properties": {
+        "category": {
+          "type": "string",
+          "pattern": "^[Rr][Aa][Ww][-_ ]?[Tt][Rr][Aa][Nn][Ss][Cc][Rr][Ii][Pp][Tt][Ss]?$"
+        }
+      }
+    },
+    "extensions": {
+      "type": "object",
+      "propertyNames": { "pattern": "^[a-z0-9][a-z0-9.-]*/[A-Za-z0-9._-]+$" },
+      "additionalProperties": true
+    }
+  }
+}

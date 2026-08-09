@@ -1,0 +1,38 @@
+{
+  "name": "open-work-commons",
+  "version": "0.0.0",
+  "description": "Open, local-first primitives for portable and verifiable human-agent work.",
+  "private": true,
+  "license": "Apache-2.0",
+  "type": "module",
+  "bin": {
+    "owc": "./dist/apps/cli/src/main.js"
+  },
+  "packageManager": "pnpm@11.16.0",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "owc": "tsx apps/cli/src/main.ts",
+    "build": "tsc",
+    "benchmark:public": "node --test benchmarks/handoff-v0/interrupted/test/public.test.js",
+    "benchmark:reference": "node scripts/benchmark/run-reference-v0.mjs",
+    "benchmark:verify": "node scripts/benchmark/verify-v0.mjs",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "plane:validate": "tsx scripts/plane/bootstrap-v0.mts --manifest-only",
+    "plane:check": "tsx scripts/plane/bootstrap-v0.mts",
+    "plane:apply": "tsx scripts/plane/bootstrap-v0.mts --apply",
+    "typecheck": "tsc --noEmit",
+    "test": "tsx --test \"{apps,packages,conformance}/**/*.test.ts\"",
+    "check": "pnpm format:check && pnpm typecheck && pnpm test && pnpm benchmark:verify && pnpm benchmark:public && pnpm benchmark:reference && pnpm plane:validate"
+  },
+  "devDependencies": {
+    "@types/node": "^24.0.0",
+    "ajv": "8.20.0",
+    "ajv-formats": "3.0.1",
+    "prettier": "^3.6.2",
+    "tsx": "^4.20.3",
+    "typescript": "^5.8.3"
+  }
+}

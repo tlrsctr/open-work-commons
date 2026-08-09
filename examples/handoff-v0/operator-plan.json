@@ -1,0 +1,35 @@
+{
+  "source": {
+    "provider": "entire",
+    "providerVersion": "0.9.0",
+    "externalCheckpointId": "01KVBJCWYA4YW6J5M9GP655HZN"
+  },
+  "actor": {
+    "id": "example-operator",
+    "displayName": "Example Operator"
+  },
+  "spaceId": "example-space",
+  "work": {
+    "workItemId": "EXAMPLE-1",
+    "title": "Prove a portable work handoff",
+    "objective": "Resume exact work from a verified archive without importing the source transcript.",
+    "constraints": [
+      "Treat the Entire export as untrusted provider input.",
+      "Bind the handoff to exact local Git state.",
+      "Exclude provider transcripts and summaries."
+    ]
+  },
+  "decisions": [
+    "Use Entire only through a replaceable adapter.",
+    "Require exact human approval before signing or persistence."
+  ],
+  "openQuestions": [
+    "Which second capture provider should demonstrate portability next?"
+  ],
+  "nextAction": "Verify the archive offline and compile the bounded Claude resume bundle.",
+  "sensitivity": "private",
+  "retention": {
+    "class": "checkpoint",
+    "expiresAt": null
+  }
+}

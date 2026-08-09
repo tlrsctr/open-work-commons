@@ -1,0 +1,40 @@
+{
+  "schema_version": 1,
+  "benchmark_id": "owc-cross-agent-handoff-v0",
+  "fixture_version": "0.1.0",
+  "task": "promotion-evidence-gate",
+  "time_limit_minutes": 25,
+  "conditions": [
+    "codex-baseline",
+    "codex-assisted-from-claude",
+    "claude-baseline",
+    "claude-assisted-from-codex"
+  ],
+  "primary_measure": "all_acceptance_tests_pass",
+  "secondary_measures": [
+    "seconds_to_first_correct_action",
+    "total_seconds",
+    "input_tokens",
+    "output_tokens",
+    "repeated_questions",
+    "missed_source_constraints",
+    "human_corrections"
+  ],
+  "network_allowed": false,
+  "sha256": {
+    "ISSUE.md": "55ee428495036f6b006a05d6e9e61aa299847523b8a4a249e00065c56ccf11c7",
+    "source-session-interventions.md": "bd3dc9ce2e19bf0dcc56fb3b0f6942f53797fa47e8d42d0d5be3c7baa33b3480",
+    "interrupted/package.json": "e1eba4994e6794f7bf2a2cca6396180d566d732f89e9810c4e73b81e473c2a22",
+    "interrupted/src/promotion-gate.js": "8306f53001e71b0c48a3f8258d2abd8807d620a1aa746bc041e9afb675d5ea03",
+    "interrupted/test/public.test.js": "80344e6975e4cb34c5906f610a6d7ab070626704b687c09cebc998c91a9bed79",
+    "evaluator/acceptance.test.mjs": "c2b48e84af1c6ecdb5214b4035b0d019484dd5da7b45653ba849b9e8bdb3d544",
+    "reference/src/promotion-gate.js": "73211a6ddbfa21c480dda9ba093bb10f3090c6bdba176b763f53e2121b760cd0"
+  },
+  "participant_files": ["ISSUE.md", "interrupted/"],
+  "custodian_files": [
+    "benchmark.json",
+    "source-session-interventions.md",
+    "evaluator/",
+    "reference/"
+  ]
+}

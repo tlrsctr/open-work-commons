@@ -1,0 +1,150 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  check:
+    name: ${{ matrix.os }} / Node ${{ matrix.node }}
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 20
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-24.04, macos-14]
+        node: [22, 24]
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          fetch-depth: 0
+      - name: Install pnpm
+        uses: pnpm/action-setup@f40ffcd9367d9f12939873eb1018b921a783ffaa # v4
+        with:
+          version: 11.16.0
+          run_install: false
+      - name: Set up Node.js
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: ${{ matrix.node }}
+          cache: pnpm
+      - name: Install locked dependencies
+        run: pnpm install --frozen-lockfile
+      - name: Run repository checks
+        run: pnpm check
+      - name: Build the CLI
+        run: pnpm build
+      - name: Smoke-test the compiled CLI
+        run: node dist/apps/cli/src/main.js --help
+      - name: Verify the independent archive fixture without a provider
+        run: node dist/apps/cli/src/main.js archive verify conformance/valid/minimal --allow-untrusted-signer --json
+      - name: Smoke-test inspect, approve, create, verify, and resume
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          cli="dist/apps/cli/src/main.js"
+          demo_root="${RUNNER_TEMP}/owc-handoff-${{ matrix.node }}"
+          archive="${demo_root}/archive"
+          mkdir -p "${demo_root}"
+
+          node "${cli}" init --json > "${demo_root}/init.json"
+          node "${cli}" handoff inspect \
+            --plan=examples/handoff-v0/operator-plan.json \
+            --entire-detail=examples/handoff-v0/entire-checkpoint-detail.sanitized.json \
+            --captured-at=2026-08-07T12:00:00Z \
+            --json > "${demo_root}/inspection.json"
+
+          approval_digest="$(node -e 'const fs = require("node:fs"); const value = JSON.parse(fs.readFileSync(process.argv[1], "utf8")); process.stdout.write(value.data.review.approvalDigest);' "${demo_root}/inspection.json")"
+          signer_fingerprint="$(node -e 'const fs = require("node:fs"); const value = JSON.parse(fs.readFileSync(process.argv[1], "utf8")); process.stdout.write(value.data.identity.fingerprint);' "${demo_root}/init.json")"
+
+          node "${cli}" handoff create \
+            --plan=examples/handoff-v0/operator-plan.json \
+            --entire-detail=examples/handoff-v0/entire-checkpoint-detail.sanitized.json \
+            --captured-at=2026-08-07T12:00:00Z \
+            --approve="${approval_digest}" \
+            --output="${archive}" \
+            --json > "${demo_root}/creation.json"
+
+          if grep -R -F "SYNTHETIC_EXCLUDED_" "${demo_root}/inspection.json" "${archive}"; then
+            echo "Synthetic provider content crossed the handoff boundary." >&2
+            exit 1
+          fi
+
+          node "${cli}" archive verify "${archive}" \
+            --trust="${signer_fingerprint}" \
+            --repo=. \
+            --json > "${demo_root}/verification.json"
+          node "${cli}" resume compile "${archive}" \
+            --target=codex \
+            --max-items=64 \
+            --max-bytes=32768 \
+            --trust="${signer_fingerprint}" \
+            --json > "${demo_root}/resume-codex.json"
+          node "${cli}" resume compile "${archive}" \
+            --target=claude \
+            --max-items=64 \
+            --max-bytes=32768 \
+            --trust="${signer_fingerprint}" \
+            --json > "${demo_root}/resume-claude.json"
+
+          node -e '
+            const fs = require("node:fs");
+            const root = process.argv[1];
+            const read = (name) => JSON.parse(fs.readFileSync(root + "/" + name, "utf8"));
+            const creation = read("creation.json");
+            const verification = read("verification.json");
+            const codex = read("resume-codex.json");
+            const claude = read("resume-claude.json");
+            if (!creation.ok || !creation.data.verification.offline || !creation.data.verification.approval_recomputed) process.exit(1);
+            if (!verification.ok || verification.data.externalRepositoryVerification.status !== "matched") process.exit(1);
+            for (const resume of [codex, claude]) {
+              if (!resume.ok || !resume.data.archive_reverified_offline) process.exit(1);
+              if (resume.data.serialization.bundle_json.byte_length > 32768) process.exit(1);
+              if (resume.data.serialization.markdown.byte_length > 32768) process.exit(1);
+            }
+          ' "${demo_root}"
+
+  dependency-audit:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+      - name: Install pnpm
+        uses: pnpm/action-setup@f40ffcd9367d9f12939873eb1018b921a783ffaa # v4
+        with:
+          version: 11.16.0
+          run_install: false
+      - name: Set up Node.js
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: 22
+          cache: pnpm
+      - name: Install locked dependencies
+        run: pnpm install --frozen-lockfile
+      - name: Audit production dependencies
+        run: pnpm audit --prod --audit-level high
+
+  dependency-review:
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    permissions:
+      contents: read
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+      - name: Review dependency changes
+        uses: actions/dependency-review-action@2031cfc080254a8a887f58cffee85186f0e49e48 # v4.9.0
+        with:
+          fail-on-severity: high

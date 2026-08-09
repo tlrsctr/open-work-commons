@@ -1,0 +1,221 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://openworkcommons.org/schemas/v0/checkpoint.schema.json",
+  "title": "Open Work Commons v0 checkpoint",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "checkpoint_id",
+    "created_at",
+    "session_id",
+    "capture_providers",
+    "work",
+    "parents",
+    "event_refs",
+    "git_state",
+    "artifacts",
+    "claims",
+    "evidence",
+    "open_questions",
+    "exclusions",
+    "next_action"
+  ],
+  "properties": {
+    "schema_version": { "const": "0.1" },
+    "checkpoint_id": { "type": "string", "minLength": 1, "maxLength": 512 },
+    "created_at": { "type": "string", "format": "date-time" },
+    "session_id": { "type": "string", "minLength": 1, "maxLength": 512 },
+    "capture_providers": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["name"],
+        "properties": {
+          "name": {
+            "type": "string",
+            "pattern": "^[a-z0-9][a-z0-9._-]{0,127}$"
+          },
+          "external_session_id": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 512
+          }
+        }
+      }
+    },
+    "work": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["work_item_id", "title", "objective", "constraints"],
+      "properties": {
+        "work_item_id": { "type": "string", "minLength": 1, "maxLength": 512 },
+        "title": { "type": "string", "minLength": 1, "maxLength": 512 },
+        "objective": { "type": "string", "minLength": 1, "maxLength": 8192 },
+        "constraints": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 1, "maxLength": 4096 }
+        }
+      }
+    },
+    "parents": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": { "$ref": "#/$defs/checkpointRef" }
+    },
+    "event_refs": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["event_id", "path", "digest"],
+        "properties": {
+          "event_id": { "$ref": "#/$defs/eventId" },
+          "path": { "$ref": "#/$defs/relativePath" },
+          "digest": { "$ref": "#/$defs/digest" }
+        }
+      }
+    },
+    "git_state": { "$ref": "#/$defs/pathDigestRef" },
+    "artifacts": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["path", "digest", "media_type", "role", "byte_length"],
+        "properties": {
+          "path": { "$ref": "#/$defs/relativePath" },
+          "digest": { "$ref": "#/$defs/digest" },
+          "media_type": { "type": "string", "minLength": 1, "maxLength": 256 },
+          "role": { "type": "string", "minLength": 1, "maxLength": 128 },
+          "byte_length": { "type": "integer", "minimum": 0 }
+        }
+      }
+    },
+    "claims": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["claim_id", "statement", "actor_id", "subject_digest"],
+        "properties": {
+          "claim_id": { "type": "string", "minLength": 1, "maxLength": 512 },
+          "statement": { "type": "string", "minLength": 1, "maxLength": 8192 },
+          "actor_id": { "type": "string", "minLength": 1, "maxLength": 512 },
+          "subject_digest": { "$ref": "#/$defs/digest" }
+        }
+      }
+    },
+    "evidence": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "evidence_id",
+          "kind",
+          "issuer",
+          "subject_digest",
+          "result",
+          "observed_at"
+        ],
+        "properties": {
+          "evidence_id": { "type": "string", "minLength": 1, "maxLength": 512 },
+          "kind": { "type": "string", "minLength": 1, "maxLength": 128 },
+          "issuer": { "type": "string", "minLength": 1, "maxLength": 512 },
+          "subject_digest": { "$ref": "#/$defs/digest" },
+          "result": { "enum": ["passed", "failed", "unknown"] },
+          "observed_at": { "type": "string", "format": "date-time" },
+          "source": { "$ref": "#/$defs/pathDigestRef" }
+        }
+      }
+    },
+    "open_questions": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 1, "maxLength": 4096 }
+    },
+    "exclusions": {
+      "type": "array",
+      "minItems": 1,
+      "contains": { "$ref": "#/$defs/rawTranscriptExclusion" },
+      "items": { "$ref": "#/$defs/exclusion" }
+    },
+    "next_action": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["statement", "source_paths"],
+      "properties": {
+        "statement": { "type": "string", "minLength": 1, "maxLength": 8192 },
+        "source_paths": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": { "$ref": "#/$defs/relativePath" }
+        }
+      }
+    },
+    "extensions": { "$ref": "#/$defs/extensions" }
+  },
+  "$defs": {
+    "digest": { "type": "string", "pattern": "^sha256:[a-f0-9]{64}$" },
+    "eventId": {
+      "type": "string",
+      "pattern": "^urn:owc:event:[A-Za-z0-9._:-]+$",
+      "maxLength": 512
+    },
+    "relativePath": {
+      "type": "string",
+      "pattern": "^(?!/)(?!.*\\\\)(?!.*(?:^|/)(?:\\.|\\.\\.)(?:/|$))(?!.*//)[A-Za-z0-9._-]+(?:/[A-Za-z0-9._-]+)*$",
+      "maxLength": 1024
+    },
+    "pathDigestRef": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "digest"],
+      "properties": {
+        "path": { "$ref": "#/$defs/relativePath" },
+        "digest": { "$ref": "#/$defs/digest" }
+      }
+    },
+    "checkpointRef": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["checkpoint_id", "path", "digest"],
+      "properties": {
+        "checkpoint_id": { "type": "string", "minLength": 1, "maxLength": 512 },
+        "path": { "$ref": "#/$defs/relativePath" },
+        "digest": { "$ref": "#/$defs/digest" }
+      }
+    },
+    "exclusion": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["category", "reason", "policy"],
+      "properties": {
+        "category": { "type": "string", "minLength": 1, "maxLength": 128 },
+        "reason": { "type": "string", "minLength": 1, "maxLength": 2048 },
+        "policy": { "type": "string", "minLength": 1, "maxLength": 256 }
+      }
+    },
+    "rawTranscriptExclusion": {
+      "type": "object",
+      "required": ["category"],
+      "properties": {
+        "category": {
+          "type": "string",
+          "pattern": "^[Rr][Aa][Ww][-_ ]?[Tt][Rr][Aa][Nn][Ss][Cc][Rr][Ii][Pp][Tt][Ss]?$"
+        }
+      }
+    },
+    "extensions": {
+      "type": "object",
+      "propertyNames": { "pattern": "^[a-z0-9][a-z0-9.-]*/[A-Za-z0-9._-]+$" },
+      "additionalProperties": true
+    }
+  }
+}

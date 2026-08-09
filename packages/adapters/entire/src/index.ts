@@ -1,0 +1,33 @@
+export {
+  createEntireAdapter,
+  type CommandInvocation,
+  type CommandResult,
+  type CommandRunner,
+  type EntireAdapterOptions,
+  type EntireAdapterDiagnostic,
+  type EntireCheckpointDiscoveryReason,
+  type EntireCheckpointDiscoveryResult,
+  type ProbeState,
+  type ProviderCapabilityReport,
+  type ProviderInspectionOptions,
+  type WorkCaptureProviderAdapter,
+} from "./entire-adapter.js";
+
+export {
+  importEntireCheckpointDetail,
+  importEntireCheckpointList,
+  type EntireCheckpointImportDiagnostic,
+  type EntireCheckpointImportOptions,
+  type EntireCheckpointImportResult,
+  type OwcActorCandidate,
+  type OwcCandidateGap,
+  type OwcCandidateHandling,
+  type OwcCheckpointCandidate,
+  type OwcCodeLearningCandidate,
+  type OwcEventCandidate,
+  type OwcImportExclusion,
+  type OwcSessionCandidate,
+  type OwcSummaryCandidate,
+  type OwcTokenUsageCandidate,
+  type UntrustedProviderText,
+} from "./checkpoint-import.js";

@@ -1,0 +1,382 @@
+{
+  "schema_version": 1,
+  "project": {
+    "identifier": "OWC",
+    "name": "Open Work Commons"
+  },
+  "work_items": [
+    {
+      "key": "OWC-V0-OBJECTIVE",
+      "title": "Objective — Prove a portable agent-work handoff without a hosted dependency",
+      "priority": "urgent",
+      "state": "In Progress",
+      "parent": null,
+      "blocked_by": [],
+      "outcome": "Within 30–45 days, another person can capture a Codex or Claude coding session, create a signed Git-linked archive, verify it offline, and resume the task in the other agent without copying the original transcript.",
+      "journey": "A person starts with a seeded Git task, works in one supported agent through Entire, creates and transfers an Open Work Commons archive, verifies it on a clean machine, prepares a bounded resume bundle, and completes the task in the other agent.",
+      "scope": [
+        "Entire 0.9 or later as the first replaceable capture provider.",
+        "Codex → Claude and Claude → Codex handoffs.",
+        "Local identity, signed archive, exact Git binding, offline verification, and bounded resume bundle.",
+        "macOS ARM64 and Linux x86_64 installation evidence."
+      ],
+      "acceptance": [
+        "Both handoff directions complete the seeded task and pass its predefined tests.",
+        "Verification requires no network or vendor account.",
+        "Every tested archive mutation fails non-zero and identifies the affected object.",
+        "Raw transcripts are excluded by default and hidden chain-of-thought is never requested.",
+        "The archive remains intelligible and verifiable without Entire."
+      ],
+      "non_goals": [
+        "Multiplayer CRDT collaboration or a DeltaDB replacement.",
+        "Team synchronization, federation, hosted accounts, web UI, or orchestration.",
+        "Replacing Entire capture before a concrete sovereignty or compatibility failure exists."
+      ],
+      "evidence": [
+        "Two seeded handoff recordings and acceptance-test results.",
+        "Offline verification and tamper-corpus output.",
+        "Release artifacts, checksums, SBOM, and clean-machine quickstart transcript."
+      ],
+      "related": []
+    },
+    {
+      "key": "OWC-V0-TRUST",
+      "title": "Freeze v0 sovereignty, trust, privacy, and threat contract",
+      "priority": "urgent",
+      "state": "In Progress",
+      "parent": "OWC-V0-OBJECTIVE",
+      "blocked_by": [],
+      "outcome": "One reviewed contract states exactly what v0 records, signs, exports, trusts, redacts, retains, and refuses to capture.",
+      "journey": "A contributor can read one bounded RFC and threat model before implementing or reviewing any capture or archive behavior.",
+      "scope": [
+        "Actor, session, checkpoint, artifact, claim, evidence, archive, and signer vocabulary.",
+        "Signature-valid versus signer-trusted distinction.",
+        "Secret leakage, malicious captured content, archive tampering, key loss, retention, and deletion.",
+        "Provider replacement and offline-continuity requirements."
+      ],
+      "acceptance": [
+        "The v0 commands, supported platforms, authority boundaries, and non-goals are explicit.",
+        "Raw transcripts are off by default and hidden chain-of-thought is prohibited.",
+        "Redaction is required before durable storage.",
+        "Each named threat has a mitigation, accepted risk, or release-blocking disposition."
+      ],
+      "non_goals": [
+        "Choosing a full team identity, federation, or CRDT architecture."
+      ],
+      "evidence": [
+        "Reviewed RFC and threat model with recorded decisions for keys, canonicalization, redaction, and archive boundaries."
+      ],
+      "related": []
+    },
+    {
+      "key": "OWC-V0-REPO",
+      "title": "Establish the open-source repository and release baseline",
+      "priority": "high",
+      "state": "In Progress",
+      "parent": "OWC-V0-OBJECTIVE",
+      "blocked_by": [],
+      "outcome": "Contributors can clone one clean repository, run one documented check, and inspect its mission, license, security policy, and contribution rules.",
+      "journey": "A new contributor clones the repository, installs pinned dependencies, runs the checks, and can submit a change without founder-only knowledge.",
+      "scope": [
+        "Apache-2.0 client, schemas, SDK, adapters, and conformance code.",
+        "DCO-style contribution policy without copyright assignment.",
+        "Pinned CI, formatting, type checking, tests, dependency review, SBOM, and signed-release plan."
+      ],
+      "acceptance": [
+        "A clean checkout passes the documented check command.",
+        "Repository files contain no unrelated private-product data, private Plane identifiers, secrets, or copied unlicensed specifications.",
+        "Security reporting and release provenance expectations are documented.",
+        "Root configuration names Entire only as a replaceable adapter."
+      ],
+      "non_goals": [
+        "Publishing a hosted service or creating a formal foundation in v0."
+      ],
+      "evidence": [
+        "Clean-install CI run, license scan, secret scan, and repository tree review."
+      ],
+      "related": []
+    },
+    {
+      "key": "OWC-V0-BENCHMARK",
+      "title": "Create the seeded cross-agent handoff benchmark",
+      "priority": "high",
+      "state": "In Progress",
+      "parent": "OWC-V0-OBJECTIVE",
+      "blocked_by": [],
+      "outcome": "One public synthetic repository task can measure whether a resume bundle improves a fresh agent handoff.",
+      "journey": "An evaluator interrupts the seeded task at a fixed point, resumes with or without a bundle, and compares completion against the same acceptance tests.",
+      "scope": [
+        "One deterministic task with hidden acceptance tests and an explicit interruption point.",
+        "Codex-first and Claude-first runs.",
+        "Time or tokens to first correct action, repeated questions, missed constraints, completion, and review effort."
+      ],
+      "acceptance": [
+        "The task is solvable by either agent from the original issue and repository.",
+        "Baseline and bundle-assisted conditions differ only by the resume artifact.",
+        "The fixture contains no private code, credentials, or personal data.",
+        "Results can falsify the value of the bundle."
+      ],
+      "non_goals": ["Claiming general agent superiority from one task."],
+      "evidence": [
+        "Seed repository, fixed interruption checkpoint, acceptance tests, scoring script, and baseline run record."
+      ],
+      "related": []
+    },
+    {
+      "key": "OWC-V0-SCHEMAS",
+      "title": "Publish v0 schemas and independent conformance fixtures",
+      "priority": "urgent",
+      "state": "In Progress",
+      "parent": "OWC-V0-OBJECTIVE",
+      "blocked_by": ["OWC-V0-TRUST", "OWC-V0-BENCHMARK"],
+      "outcome": "A second implementation can create and validate v0 records without importing the reference CLI.",
+      "journey": "An implementer reads the schemas, validates golden fixtures, rejects malicious fixtures, and reproduces the recorded normative digests.",
+      "scope": [
+        "Event, session, artifact, Git state, checkpoint, evidence, archive manifest, and resume-bundle schemas.",
+        "Canonical serialization and digest/signature inputs.",
+        "Valid, invalid, malicious, and version-migration fixtures."
+      ],
+      "acceptance": [
+        "Every normative object has an explicit schema version.",
+        "Equal normative inputs reproduce the published digest.",
+        "Unknown extensions remain namespaced and cannot change core semantics.",
+        "A validator independent of application code passes the valid corpus and rejects the invalid corpus."
+      ],
+      "non_goals": [
+        "A universal ontology for every work, life, or civic domain."
+      ],
+      "evidence": [
+        "Published schemas, fixture corpus, recorded digests, and conformance output."
+      ],
+      "related": []
+    },
+    {
+      "key": "OWC-V0-STORE",
+      "title": "Build the local identity, event, and artifact store",
+      "priority": "urgent",
+      "state": "In Progress",
+      "parent": "OWC-V0-OBJECTIVE",
+      "blocked_by": ["OWC-V0-REPO", "OWC-V0-SCHEMAS"],
+      "outcome": "The CLI initializes a private offline workspace that stores signed events and content-addressed artifacts without a hosted account.",
+      "journey": "A person runs `owc init`, inspects the signer fingerprint and storage health, records events, restarts, and reads the same verified state offline.",
+      "scope": [
+        "One local device identity.",
+        "OS key store or documented mode-0600 fallback.",
+        "Append-only events, content-addressed blobs, redaction before persistence, and `owc doctor`."
+      ],
+      "acceptance": [
+        "Initialization and all reads work with network access disabled.",
+        "Secret canaries never appear in the store, blobs, logs, or exported fixtures.",
+        "Interrupted writes cannot corrupt previously committed records.",
+        "Doctor reports permissions, key health, schema version, and repair guidance."
+      ],
+      "non_goals": [
+        "Multi-user synchronization, recovery ceremonies, or hosted identity."
+      ],
+      "evidence": [
+        "Persistence, crash-recovery, permission, and secret-canary test output."
+      ],
+      "related": []
+    },
+    {
+      "key": "OWC-V0-GIT",
+      "title": "Bind checkpoints to exact Git state",
+      "priority": "high",
+      "state": "In Progress",
+      "parent": "OWC-V0-OBJECTIVE",
+      "blocked_by": ["OWC-V0-REPO", "OWC-V0-SCHEMAS"],
+      "outcome": "A checkpoint identifies precisely which repository state it describes, including an uncommitted working tree.",
+      "journey": "A person checkpoints clean, dirty, and divergent repositories and verifies each binding without contacting a remote.",
+      "scope": [
+        "Repository identity, base and head commits, tree digest, dirty patch, and untracked-file manifest.",
+        "Clean, committed, dirty, and divergent fixture repositories."
+      ],
+      "acceptance": [
+        "Checkpoint creation fails closed outside Git or for unresolved revisions.",
+        "Verification detects commit, tree, patch, and untracked-manifest changes.",
+        "No network lookup is required.",
+        "Sensitive ignored files are never included implicitly."
+      ],
+      "non_goals": [
+        "Replacing Git or implementing live collaborative version control."
+      ],
+      "evidence": [
+        "Git fixture repositories and binding/tamper integration-test output."
+      ],
+      "related": []
+    },
+    {
+      "key": "OWC-V0-ENTIRE",
+      "title": "Use Entire as the first capture provider for Codex and Claude",
+      "priority": "urgent",
+      "state": "In Progress",
+      "parent": "OWC-V0-OBJECTIVE",
+      "blocked_by": ["OWC-V0-REPO", "OWC-V0-SCHEMAS"],
+      "outcome": "The CLI imports supported Entire checkpoints for Codex and Claude into provider-neutral session events without requiring Entire.io login.",
+      "journey": "A person enables Entire locally, runs either agent, selects a checkpoint, and sees which fields were imported, excluded, or unavailable before archive creation.",
+      "scope": [
+        "Entire CLI 0.9 or later local checkpoint inspection.",
+        "Codex and Claude capture paths supported by Entire.",
+        "A provider capability report and explicit mapping to the v0 session schema.",
+        "An exit fixture proving the archive remains usable when Entire is absent."
+      ],
+      "acceptance": [
+        "No Entire.io authentication or hosted API is required.",
+        "Raw transcripts are excluded unless a separate explicit policy enables them.",
+        "Unsupported and unavailable observations remain explicit rather than inferred.",
+        "Adapter failure cannot modify the Git worktree or corrupt the local store.",
+        "Fixture tests cover both agent types and a missing/incompatible Entire binary."
+      ],
+      "non_goals": [
+        "Forking or replacing the MIT-licensed Entire CLI during v0."
+      ],
+      "evidence": [
+        "Sanitized provider fixtures, capability output, mapping tests, and live local smoke records for Codex and Claude."
+      ],
+      "related": []
+    },
+    {
+      "key": "OWC-V0-ARCHIVE",
+      "title": "Compile and sign portable checkpoint archives",
+      "priority": "urgent",
+      "state": "In Progress",
+      "parent": "OWC-V0-OBJECTIVE",
+      "blocked_by": ["OWC-V0-STORE", "OWC-V0-GIT", "OWC-V0-ENTIRE"],
+      "outcome": "One command creates a self-contained signed archive that can be copied to another machine.",
+      "journey": "A person selects an objective and Entire checkpoint, creates an archive, inspects its included and excluded objects, and copies the single artifact elsewhere.",
+      "scope": [
+        "Objective, session range, Git state, artifacts, evidence, open questions, parent checkpoints, exclusions, and signer public identity.",
+        "Digest-addressed objects and deterministic root payload digest."
+      ],
+      "acceptance": [
+        "Equal logical inputs produce the same root payload digest.",
+        "The private signing key never enters the archive.",
+        "Excluded raw or sensitive material is absent.",
+        "Round-trip export and import preserve every normative ID and digest.",
+        "Object removal, mutation, and substitution are detectable."
+      ],
+      "non_goals": ["Proving that every signed claim is factually true."],
+      "evidence": [
+        "Golden archive, root digest, round-trip output, and mutation test matrix."
+      ],
+      "related": []
+    },
+    {
+      "key": "OWC-V0-VERIFY",
+      "title": "Verify archives fully offline and detect tampering",
+      "priority": "urgent",
+      "state": "In Progress",
+      "parent": "OWC-V0-OBJECTIVE",
+      "blocked_by": ["OWC-V0-SCHEMAS", "OWC-V0-ARCHIVE"],
+      "outcome": "A clean disconnected machine validates an archive and distinguishes integrity from trust.",
+      "journey": "A recipient copies an untrusted archive onto a disconnected machine, safely inspects it, verifies it against an optional trusted fingerprint, and receives actionable errors for mutations.",
+      "scope": [
+        "Schemas, digests, signatures, parent graph, Git bindings, evidence subject digests, and explicit signer trust.",
+        "Safe inspection of malicious, oversized, and malformed archives."
+      ],
+      "acceptance": [
+        "Verification performs no DNS, registry, API, or model access.",
+        "Integrity-valid and signer-trusted are reported separately.",
+        "Every tamper fixture fails non-zero and names the invalid object.",
+        "Inspection does not execute archive content or write outside its destination."
+      ],
+      "non_goals": [
+        "Online identity attestation or centralized certificate authority."
+      ],
+      "evidence": [
+        "Network-disabled verification transcript and complete tamper corpus with expected errors."
+      ],
+      "related": []
+    },
+    {
+      "key": "OWC-V0-RESUME",
+      "title": "Compile bounded, cited cross-agent resume bundles",
+      "priority": "high",
+      "state": "In Progress",
+      "parent": "OWC-V0-OBJECTIVE",
+      "blocked_by": ["OWC-V0-SCHEMAS", "OWC-V0-ARCHIVE", "OWC-V0-VERIFY"],
+      "outcome": "A verified archive produces a bounded resume bundle that either supported agent can consume without the original transcript.",
+      "journey": "A recipient verifies an archive, chooses Codex or Claude and a size budget, reviews the generated bundle, and supplies it to the target agent.",
+      "scope": [
+        "Machine-readable JSON and human-readable Markdown.",
+        "Objective, constraints, decisions, exact Git state, changes, evidence, gaps, next action, citations, exclusions, and untrusted-content delimiters."
+      ],
+      "acceptance": [
+        "Every decisive statement references an archive object.",
+        "The configured byte/item budget is never exceeded.",
+        "Untrusted captured content is visibly and structurally delimited.",
+        "Bundle creation performs no agent launch or tool execution.",
+        "Codex and Claude consume golden bundles without transcript copying."
+      ],
+      "non_goals": [
+        "Automatic orchestration or deciding the next task on the person's behalf."
+      ],
+      "evidence": [
+        "Golden JSON/Markdown bundles, citation-integrity tests, budget tests, and seeded smoke records."
+      ],
+      "related": []
+    },
+    {
+      "key": "OWC-V0-PROOF",
+      "title": "Prove Codex → Claude and Claude → Codex handoffs",
+      "priority": "urgent",
+      "state": "Backlog",
+      "parent": "OWC-V0-OBJECTIVE",
+      "blocked_by": [
+        "OWC-V0-BENCHMARK",
+        "OWC-V0-ENTIRE",
+        "OWC-V0-VERIFY",
+        "OWC-V0-RESUME"
+      ],
+      "outcome": "Reproducible evidence shows whether the v0 handoff promise works and whether the bundle improves the seeded task.",
+      "journey": "An evaluator runs both baseline and capsule-assisted handoffs in each direction, then compares acceptance, efficiency, questions, and missed constraints.",
+      "scope": [
+        "One Codex → Claude and one Claude → Codex interrupted-task handoff.",
+        "Baseline equivalents using only the issue and repository.",
+        "Malicious content, secret canaries, oversized input, and archive tampering."
+      ],
+      "acceptance": [
+        "The receiving agent receives the repository and bundle, not the original transcript.",
+        "Both assisted tasks pass their predefined acceptance tests.",
+        "The report records time or tokens to first correct action, repeated questions, missed constraints, completion, and review effort.",
+        "No unresolved critical security defect remains.",
+        "A null or negative result is reported without changing the metric after the run."
+      ],
+      "non_goals": [
+        "Generalizing from one fixture to all agents or all forms of work."
+      ],
+      "evidence": [
+        "Four-run comparison report, sanitized archives and bundles, security report, and defect disposition."
+      ],
+      "related": []
+    },
+    {
+      "key": "OWC-V0-RELEASE",
+      "title": "Package, document, and release v0",
+      "priority": "high",
+      "state": "Backlog",
+      "parent": "OWC-V0-OBJECTIVE",
+      "blocked_by": ["OWC-V0-PROOF"],
+      "outcome": "Another person can install the CLI and reproduce capture → archive → transfer → verify → resume without private guidance.",
+      "journey": "A new user follows the quickstart on a clean supported machine and reproduces the public example within fifteen minutes after installation.",
+      "scope": [
+        "macOS ARM64 and Linux x86_64 release artifacts.",
+        "Checksums, signatures, SBOM, compatibility matrix, limitations, public example archive, and migration statement."
+      ],
+      "acceptance": [
+        "Clean installation takes under ten minutes.",
+        "The quickstart completes in under fifteen minutes after installation.",
+        "The public example contains no private or identifying data.",
+        "Release checksums, signatures, and SBOM verify.",
+        "Entire is documented as the first replaceable provider, not a required future authority."
+      ],
+      "non_goals": [
+        "Hosted service availability, federation, CRDT collaboration, or production SLA."
+      ],
+      "evidence": [
+        "Release tag and artifacts, clean-machine logs, completed quickstart transcript, and successful offline verification output."
+      ],
+      "related": []
+    }
+  ]
+}

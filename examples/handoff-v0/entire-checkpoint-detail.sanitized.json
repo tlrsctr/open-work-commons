@@ -1,0 +1,38 @@
+{
+  "checkpoint_id": "01KVBJCWYA4YW6J5M9GP655HZN",
+  "strategy": "SYNTHETIC_EXCLUDED_STRATEGY_CANARY",
+  "branch": "SYNTHETIC_EXCLUDED_BRANCH_CANARY",
+  "checkpoints_count": 1,
+  "files_touched": ["SYNTHETIC_EXCLUDED_FILE_LIST_CANARY"],
+  "session_count": 1,
+  "sessions": [
+    {
+      "index": 0,
+      "session_id": "synthetic-session-1",
+      "agent": "SYNTHETIC_EXCLUDED_AGENT_CANARY",
+      "model": "SYNTHETIC_EXCLUDED_MODEL_CANARY",
+      "kind": "SYNTHETIC_EXCLUDED_KIND_CANARY",
+      "created_at": "2026-08-07T11:55:00Z",
+      "files_touched": ["SYNTHETIC_EXCLUDED_FILE_LIST_CANARY"],
+      "token_usage": {
+        "input_tokens": 100,
+        "output_tokens": 50
+      },
+      "summary": {
+        "intent": "SYNTHETIC_EXCLUDED_SUMMARY_CANARY",
+        "outcome": "SYNTHETIC_EXCLUDED_OUTCOME_CANARY",
+        "friction": ["SYNTHETIC_EXCLUDED_FRICTION_CANARY"],
+        "open_items": ["SYNTHETIC_EXCLUDED_OPEN_ITEM_CANARY"],
+        "learnings": {
+          "repo": ["SYNTHETIC_EXCLUDED_REPO_LEARNING_CANARY"],
+          "code": [],
+          "workflow": ["SYNTHETIC_EXCLUDED_WORKFLOW_LEARNING_CANARY"]
+        }
+      },
+      "raw_transcript": "SYNTHETIC_EXCLUDED_TRANSCRIPT_CANARY",
+      "prompts": ["SYNTHETIC_EXCLUDED_PROMPT_CANARY"],
+      "responses": ["SYNTHETIC_EXCLUDED_RESPONSE_CANARY"]
+    }
+  ],
+  "unknown_private": "SYNTHETIC_EXCLUDED_UNKNOWN_FIELD_CANARY"
+}

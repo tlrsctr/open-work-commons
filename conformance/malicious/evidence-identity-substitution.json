@@ -1,0 +1,24 @@
+{
+  "checkpoint_evidence": {
+    "evidence_id": "urn:owc:evidence:fixture-substitution-001",
+    "kind": "unit-test",
+    "issuer": "urn:owc:verifier:trusted-ci",
+    "subject_digest": "sha256:70e56c5f7fca6f8b4b21342d6679e240669341645a71e2869af4392991eb86a8",
+    "result": "passed",
+    "observed_at": "2026-08-07T08:09:00Z",
+    "source": {
+      "path": "evidence/substituted.json",
+      "digest": "sha256:0b57498daeae949fa75eb5c2d59f69b27ddb802930d3c7414cfd3d7b61159fd3"
+    }
+  },
+  "evidence_entry": {
+    "schema_version": "0.1",
+    "evidence_id": "urn:owc:evidence:fixture-substitution-001",
+    "kind": "unit-test",
+    "issuer": "urn:owc:verifier:substituted-ci",
+    "subject_digest": "sha256:70e56c5f7fca6f8b4b21342d6679e240669341645a71e2869af4392991eb86a8",
+    "result": "passed",
+    "observed_at": "2026-08-07T08:09:00Z"
+  },
+  "expected_issue": "reference_identity_mismatch"
+}
