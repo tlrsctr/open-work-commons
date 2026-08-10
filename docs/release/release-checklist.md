@@ -4,16 +4,16 @@ Open Work Commons is currently a pre-alpha, source-only developer preview. A gre
 
 ## Developer-preview readiness gate
 
-- [ ] `pnpm install --frozen-lockfile` succeeds from a clean source checkout on every supported CI pair.
-- [ ] `pnpm check` passes formatting, typechecking, unit/conformance tests, frozen benchmark integrity, public/reference benchmark behavior, and Plane-manifest validation.
-- [ ] `pnpm build` succeeds and the compiled CLI help command runs.
-- [ ] The synthetic handoff smoke initializes a fresh identity, inspects without mutation, creates only after exact approval, publishes a new archive, and excludes every synthetic provider-content canary.
-- [ ] The generated archive verifies against its device fingerprint without a provider and matches an independent recapture of the local Git repository.
-- [ ] The generated archive compiles into bounded Codex and Claude resume serializations.
-- [ ] The malicious corpus passes through the independent conformance oracle with stable diagnostic categories.
-- [ ] `pnpm audit --prod --audit-level high` reports no high-or-critical production dependency finding.
-- [ ] Workflow YAML passes `actionlint` and every action is pinned to a full commit SHA.
-- [ ] A clean-checkout audit records exact commands, versions, outcomes, and remaining blockers without leaking a username, machine path, token, transcript, or private repository data.
+- [x] `pnpm install --frozen-lockfile` succeeds from a clean source checkout on every supported CI pair.
+- [x] `pnpm check` passes formatting, typechecking, unit/conformance tests, frozen benchmark integrity, public/reference benchmark behavior, and Plane-manifest validation.
+- [x] `pnpm build` succeeds and the compiled CLI help command runs.
+- [x] The synthetic handoff smoke initializes a fresh identity, inspects without mutation, creates only after exact approval, publishes a new archive, and excludes every synthetic provider-content canary.
+- [x] The generated archive verifies against its device fingerprint without a provider and matches an independent recapture of the local Git repository.
+- [x] The generated archive compiles into bounded Codex and Claude resume serializations.
+- [x] The malicious corpus passes through the independent conformance oracle with stable diagnostic categories.
+- [x] `pnpm audit --prod --audit-level high` reports no high-or-critical production dependency finding.
+- [x] Workflow YAML passes `actionlint` and every action is pinned to a full commit SHA.
+- [x] A clean-checkout audit records exact commands, versions, outcomes, and remaining blockers without leaking a username, machine path, token, transcript, or private repository data.
 
 ## v0 alpha product-evidence gate
 
@@ -27,7 +27,7 @@ Open Work Commons is currently a pre-alpha, source-only developer preview. A gre
 
 ## Distribution gate
 
-- [ ] Create a canonical public repository URL and protect the default branch.
+- [x] Create a canonical public repository URL and protect the default branch.
 - [ ] Promote the source-preview `0.1.0-dev.0` version only after packaging scope is decided; keeping the root package private prevents accidental registry publication.
 - [ ] Publish source provenance, Apache-2.0 notices, DCO contribution rules, support boundary, changelog, and upgrade or archive-compatibility statement.
 - [ ] Decide which artifacts are distributed; do not imply support for npm, Homebrew, containers, standalone binaries, or `.owc.tar.zst` until each artifact is reproducibly built and verified.
@@ -46,7 +46,7 @@ Do not publish even a developer preview if any supported CI pair is red; exact a
 
 ## Current known release blockers
 
-- No canonical public remote, tag, changelog, or packaged artifact is configured.
+- No signed public tag or packaged artifact is configured; the supported preview remains a source checkout of the canonical repository.
 - Cross-agent Codex-to-Claude and Claude-to-Codex benchmark evidence has not been collected.
 - The root package remains private at `0.1.0-dev.0`, so the supported path is a source checkout rather than a registry package.
 - Container encoding, OS-backed credential storage, revocation, recovery, and multi-device trust are deliberately unimplemented.
