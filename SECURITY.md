@@ -4,7 +4,7 @@ Open Work Commons is pre-alpha and must not yet be used for secrets, regulated d
 
 ## Reporting
 
-Do not disclose a suspected vulnerability in a public issue. Before the first public release, the project will enable private vulnerability reporting and publish a monitored security contact. Until then, report privately to the repository owner through the source-host account that published the affected release.
+Do not disclose a suspected vulnerability in a public issue. Use GitHub's **Security → Advisories → Report a vulnerability** flow in the canonical repository so the report reaches its maintainers privately. If that interface is unavailable, contact the repository owner privately through the source-host account; do not include exploit details in a public issue or discussion.
 
 ## Security boundaries
 

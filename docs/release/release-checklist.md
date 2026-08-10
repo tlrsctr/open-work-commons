@@ -28,7 +28,7 @@ Open Work Commons is currently a pre-alpha, source-only developer preview. A gre
 ## Distribution gate
 
 - [ ] Create a canonical public repository URL and protect the default branch.
-- [ ] Select the first public version and remove the private `0.0.0` package placeholder only after packaging scope is decided.
+- [ ] Promote the source-preview `0.1.0-dev.0` version only after packaging scope is decided; keeping the root package private prevents accidental registry publication.
 - [ ] Publish source provenance, Apache-2.0 notices, DCO contribution rules, support boundary, changelog, and upgrade or archive-compatibility statement.
 - [ ] Decide which artifacts are distributed; do not imply support for npm, Homebrew, containers, standalone binaries, or `.owc.tar.zst` until each artifact is reproducibly built and verified.
 - [ ] Generate a software bill of materials and archive checksums for every distributed artifact.
@@ -48,7 +48,7 @@ Do not publish even a developer preview if any supported CI pair is red; exact a
 
 - No canonical public remote, tag, changelog, or packaged artifact is configured.
 - Cross-agent Codex-to-Claude and Claude-to-Codex benchmark evidence has not been collected.
-- The root package remains private at `0.0.0`, so the supported path is a source checkout.
+- The root package remains private at `0.1.0-dev.0`, so the supported path is a source checkout rather than a registry package.
 - Container encoding, OS-backed credential storage, revocation, recovery, and multi-device trust are deliberately unimplemented.
 - Windows is unsupported and untested.
 

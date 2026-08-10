@@ -1,9 +1,25 @@
 {
   "name": "open-work-commons",
-  "version": "0.0.0",
+  "version": "0.1.0-dev.0",
   "description": "Open, local-first primitives for portable and verifiable human-agent work.",
   "private": true,
   "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tlrsctr/open-work-commons.git"
+  },
+  "homepage": "https://github.com/tlrsctr/open-work-commons#readme",
+  "bugs": {
+    "url": "https://github.com/tlrsctr/open-work-commons/issues"
+  },
+  "keywords": [
+    "ai-agents",
+    "agent-handoff",
+    "coding-agents",
+    "interoperability",
+    "local-first",
+    "provenance"
+  ],
   "type": "module",
   "bin": {
     "owc": "./dist/apps/cli/src/main.js"

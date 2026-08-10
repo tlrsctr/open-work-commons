@@ -54,6 +54,8 @@ export type OutputSink = {
   write(value: string): void;
 };
 
+export const CLI_VERSION = "0.1.0-dev.0";
+
 export interface CliClock {
   now(): Date;
 }
@@ -77,6 +79,7 @@ type OutputMode = "text" | "json";
 
 const usage = [
   "Usage:",
+  "  owc --version [--json]",
   "  owc init [--json]",
   "  owc store health [--json]",
   "  owc identity status [--json]",
@@ -734,6 +737,20 @@ export async function runCli(
     return writeUsageError(dependencies, parsed.mode, parsed.error);
   }
   const { command, mode } = parsed;
+  if (command.length === 1 && command[0] === "--version") {
+    if (mode === "json") {
+      writeJson(dependencies.stdout, {
+        schema_version: 1,
+        command: "version",
+        ok: true,
+        exit_code: ExitCode.success,
+        data: { version: CLI_VERSION },
+      });
+    } else {
+      dependencies.stdout.write(`${CLI_VERSION}\n`);
+    }
+    return ExitCode.success;
+  }
   if (
     command.length === 0 ||
     (command.length === 1 &&

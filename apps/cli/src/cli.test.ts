@@ -18,7 +18,7 @@ import {
   type PublicDeviceIdentity,
 } from "../../../packages/identity/src/index.js";
 import type { ArchiveLoader } from "./archive-directory.js";
-import { runCli, type CliDependencies } from "./cli.js";
+import { CLI_VERSION, runCli, type CliDependencies } from "./cli.js";
 import type { DeviceIdentityRuntime } from "./device-identity-runtime.js";
 import type { GitStateRuntime } from "./git-state-runtime.js";
 import type { HandoffFileRuntime } from "./handoff-file-runtime.js";
@@ -209,6 +209,43 @@ function publicDeviceIdentity(): PublicDeviceIdentity {
 function commandResult(stdout: string, exit_code = 0): CommandResult {
   return { exit_code, stdout, stderr: "" };
 }
+
+test("version is deterministic and does not access runtime dependencies", async () => {
+  const requests: CommandRequest[] = [];
+  const fixture = fixtureDependencies(async (request) => {
+    requests.push(request);
+    throw new Error("Subprocess must not run for version output.");
+  });
+
+  assert.equal(
+    await runCli(["--version"], fixture.dependencies),
+    ExitCode.success,
+  );
+  assert.equal(fixture.stdout.join(""), `${CLI_VERSION}\n`);
+  assert.deepEqual(fixture.stderr, []);
+  assert.deepEqual(fixture.accessedPaths, []);
+  assert.deepEqual(requests, []);
+});
+
+test("version honors the existing global JSON output mode", async () => {
+  const fixture = fixtureDependencies(async () => {
+    throw new Error("Subprocess must not run for version output.");
+  });
+
+  assert.equal(
+    await runCli(["--version", "--json"], fixture.dependencies),
+    ExitCode.success,
+  );
+  assert.deepEqual(JSON.parse(fixture.stdout.join("")), {
+    schema_version: 1,
+    command: "version",
+    ok: true,
+    exit_code: ExitCode.success,
+    data: { version: CLI_VERSION },
+  });
+  assert.deepEqual(fixture.stderr, []);
+  assert.deepEqual(fixture.accessedPaths, []);
+});
 
 function entireResult(
   request: CommandRequest,

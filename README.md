@@ -12,6 +12,14 @@ Agent work today is usually trapped inside a provider session, while source cont
 
 OWC makes continuity a user-owned artifact. A checkpoint can bind operator-authored intent to exact Git bytes, keep provider claims separate from evidence, disclose what was excluded, and remain verifiable after the original provider is unavailable.
 
+## Position in a fast-moving ecosystem
+
+Cross-agent handoff, session conversion, Git-aware checkpointing, and signed agent memory are no longer novel categories. Entire captures Git-indexed sessions; CatchUp, `agent-hop`, and `resume-from` move conversation context between agents; Project Checkpoint packages transcript-free working source; Portable Agent Memory signs cross-provider memory; HACP specifies human-approved chain-of-custody records; and Agent Trust Kit protects bounded delegation packets and returned evidence.
+
+OWC is the narrower trust and interoperability layer those tools do not provide together: inspect a minimum-sufficient work checkpoint, bind approval to its canonical digest, recapture exact committed and uncommitted Git state, sign the resulting provider-neutral archive, verify it independently without a network or vendor account, and compile a bounded cited resume bundle without transporting the source transcript by default.
+
+The dated [two-week novelty and collision scan](docs/research/2026-08-10-two-week-novelty-scan.md) records the evidence and the claims OWC must not make. The defensible thesis is an open work-checkpoint trust envelope and exit right—not “the first agent handoff tool.”
+
 ## Current developer preview
 
 The repository contains an executable, source-only vertical slice for a two-phase Entire 0.9 handoff:

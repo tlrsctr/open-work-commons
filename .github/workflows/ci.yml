@@ -44,7 +44,9 @@ jobs:
       - name: Build the CLI
         run: pnpm build
       - name: Smoke-test the compiled CLI
-        run: node dist/apps/cli/src/main.js --help
+        run: |
+          node dist/apps/cli/src/main.js --help
+          test "$(node dist/apps/cli/src/main.js --version)" = "0.1.0-dev.0"
       - name: Verify the independent archive fixture without a provider
         run: node dist/apps/cli/src/main.js archive verify conformance/valid/minimal --allow-untrusted-signer --json
       - name: Smoke-test inspect, approve, create, verify, and resume
