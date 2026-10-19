@@ -18,8 +18,8 @@ importers:
         specifier: 3.0.1
         version: 3.0.1(ajv@8.20.0)
       prettier:
-        specifier: ^3.6.2
-        version: 3.9.6
+        specifier: ^3.9.10
+        version: 3.9.10
       tsx:
         specifier: ^4.20.3
         version: 4.23.9
@@ -218,8 +218,8 @@ packages:
   json-schema-traverse@1.0.0:
     resolution: {integrity: sha512-NM8/P9n3XjXhIZn1lLhkFaACTOURQXjWhV4BA/RnOv8xvgqtqpAX9IO4mRQxSx1Rlo4tqzeqb0sOlruaOy3dug==}
 
-  prettier@3.9.6:
-    resolution: {integrity: sha512-OpN0zzVdiaiAhxpuuj5efpIS4sY9j7bY6uR5mnj5yPzGkdkjNKSJeUThPb60Jw29QuAZgA4o+/iB49kFiaBX6g==}
+  prettier@3.9.10:
+    resolution: {integrity: sha512-skGHTH1Yb9QvaTC4hWnRTzEYtCpApF0UMBPz+t/0ZPzP8ihefo/btKd+QA7pUE0fEwA1SbS/NmhyEcstdXOIdA==}
     engines: {node: '>=14'}
     hasBin: true
 
@@ -373,7 +373,7 @@ snapshots:
 
   json-schema-traverse@1.0.0: {}
 
-  prettier@3.9.6: {}
+  prettier@3.9.10: {}
 
   require-from-string@2.0.2: {}
 
