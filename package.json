@@ -44,7 +44,7 @@
     "check": "pnpm format:check && pnpm typecheck && pnpm test && pnpm benchmark:verify && pnpm benchmark:public && pnpm benchmark:reference && pnpm plane:validate"
   },
   "devDependencies": {
-    "@types/node": "^24.0.0",
+    "@types/node": "^26.6.5",
     "ajv": "8.20.0",
     "ajv-formats": "3.0.1",
     "prettier": "^3.6.2",
